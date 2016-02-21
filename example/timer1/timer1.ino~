@@ -1,0 +1,59 @@
+int  REL = 13;
+
+class MyVector {
+  int oldTime;
+  int repCount;
+  int iterator;
+  int repInterval;
+  int vId;
+  boolean theEnd = false;
+
+public:
+  MyVector(int interval, int count, int id){
+    oldTime = 0;
+    repCount = count;
+    iterator = 0;
+    repInterval = interval;
+    vId = id;
+  }
+
+  void Step(unsigned long curMill){
+    if(!theEnd){
+      if(++iterator=repCount){
+        theEnd=true;
+        Serial.print("I'm finished ");
+        Serial.println(vId);
+        return;
+      }
+      else{
+        if(curMill-oldTime>repInterval){
+          oldTime=curMill;
+          Serial.print("Ping ");
+          Serial.println(vId);
+          Serial.println(oldTime);
+        }
+      }
+    }
+  }
+}
+
+MyVector v1(5000,5,1);
+MyVector v2(4000,10,2);
+
+void setup(){
+  Serial.begin(9600);
+  Serial.println('Ping go!')
+    // Timer0 
+    OCR0A = 0xAF;
+  TIMSK0 |= _BV(OCIE0A);
+} 
+
+SIGNAL(TIMER0_COMPA_vect){
+  unsigned long currentMillis = millis();
+  //v1.Step(currentMillis);
+  //v2.Step(currentMillis);
+}
+
+void loop(){
+}
+

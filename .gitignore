@@ -26,3 +26,7 @@
 *.exe
 *.out
 *.app
+
+# Service folders
+/tmp
+/libraries
